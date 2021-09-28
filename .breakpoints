@@ -1,3 +1,12 @@
 {
-  "files": {}
+  "files": {
+    "ClientIdList": [
+      {
+        "id": "6e1e3519-c0da-49ca-bbaa-f18ea95549d8",
+        "line": 4,
+        "version": 1,
+        "index": 91
+      }
+    ]
+  }
 }

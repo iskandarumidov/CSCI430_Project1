@@ -1,30 +1,27 @@
-import java.util.*;
-import java.lang.*;
 import java.io.*;
 public class Quantity implements Serializable {
   private static final long serialVersionUID = 1L;
-  private ShoppingCart cart;
   private Product product;
-  private int quantity;
+  private int qty;
 
 
-  public Quantity (ShoppingCart cart, Product product, int quantity) {
-    this.cart = cart;
+  public Quantity(Product product, int qty) {
     this.product = product;
-    this.quantity = quantity;
+    this.qty = qty;
   }
 
-  public ShoppingCart getCart() {
-    return cart;
-  }
   public Product getProduct() {
     return product;
   }
-  public int getQuantity() {
-    return quantity;
+  public int getQty() {
+    return qty;
+  }
+  
+  public void setQty(int updatedQty) {
+	  qty = updatedQty;
   }
 
   public String toString() {
-      return "Cart: " + cart + " Product:  " + product + " Quantity: " + quantity;
+      return "Product:  " + product.getName() + " Quantity: " + qty;
   }
 }

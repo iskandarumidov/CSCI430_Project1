@@ -10,7 +10,6 @@ public class ClientList implements Serializable {
   private static ClientList clientList;
   private ClientList() {
   }
-
   public Iterator getClients(){
      return clients.iterator();
   }

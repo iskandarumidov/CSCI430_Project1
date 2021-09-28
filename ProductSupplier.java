@@ -1,13 +1,13 @@
 import java.util.*;
 import java.io.*;
-
+//TODO Iskandar Does this need readobject & readobject?
 public class ProductSupplier implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Supplier supplier; 
 	private Product product;
-	private float price; 
+	private double price; 
 	
-	public ProductSupplier(Supplier supplier, Product product, float price) {
+	public ProductSupplier(Supplier supplier, Product product, double price) {
 		this.supplier = supplier;
 		this.product = product;
 		this.price = price;
@@ -19,12 +19,12 @@ public class ProductSupplier implements Serializable {
 	public Product getProduct() {
 		return product;
 	}
-	public float getPrice() {
+	public double getPrice() {
 		return price;
 	}
 	
 	public String toString() {
-	    return  supplier.toString() +  " " + product.toString() + " Price " + price;
+	    return supplier.toString() +  " " + product.toString() + " Price " + price;
 	  }
 	  
 }

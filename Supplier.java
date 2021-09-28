@@ -5,13 +5,15 @@ public class Supplier implements Serializable  {
 	private String supplierID;
 	private String name;
 	private String address;
-	private static final String SUPPLIER_STRING = "S";
-	private List<Supplies> suppliedProducts = new LinkedList<Supplies>();
+    private String phoneNumber;
+	private List<ProductSupplier> suppliedProducts = new LinkedList<ProductSupplier>();
 
-	public Supplier(String name, String address)
+	public Supplier(String supplierID, String name, String address, String phoneNumber)
 	{
+    this.supplierID = supplierID;
 		this.name = name;
 		this.address = address;
+    this.phoneNumber = phoneNumber;
 	}
 
 	public void setName(String name)
@@ -39,23 +41,27 @@ public class Supplier implements Serializable  {
 		return address;
 	}
 
-	public Iterator getSuppliedProducts()
+  public String getPhoneNumber() {
+    return phoneNumber;
+  }
+
+	public Iterator<ProductSupplier> getSuppliedProducts()
 	{
 		return suppliedProducts.iterator();
 	}
 
-	public boolean assignProduct(Supplies supplies)
+	public boolean addProductSupplier(ProductSupplier productSupplier)
 	{
-		return suppliedProducts.add(supplies);
+		return suppliedProducts.add(productSupplier);
 	}
 
 	public boolean unassignProduct(String productID, String supplierID)
 	{
-		Iterator suppliesIterator = suppliedProducts.iterator();
+		Iterator productSupplierIterator = suppliedProducts.iterator();
 
-		while (suppliesIterator.hasNext())
+		while (productSupplierIterator.hasNext())
 		{
-			Supplies supplies = (Supplies)(suppliesIterator.next());
+			ProductSupplier supplies = (ProductSupplier)(productSupplierIterator.next());
 			Supplier supplier = supplies.getSupplier();
 			Product product = supplies.getProduct();
 			if (product.getProductID().equals(productID) && supplier.getSupplierID().equals(supplierID))
@@ -64,10 +70,10 @@ public class Supplier implements Serializable  {
 			}
 		}
 
-		return false; //Couldn't find Supplies object to unassign
+		return false;
 	}
 
 	public String toString() {
-		return "Supplier ID: " + supplierID + " | Name: " + name + " | Address: " + address;
+		return "Supplier ID: " + supplierID + " | Name: " + name + " | Address: " + address + " | Phone Number: " + phoneNumber;
 	}
 }

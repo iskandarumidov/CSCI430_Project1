@@ -1,7 +1,7 @@
 import java.util.*;
-import java.lang.*;
 import java.io.*;
 
+//TODO Iskandar add writeObject & readObject? For SupplierList and ProductList
 public class ProductList implements Serializable {
   private static final long serialVersionUID = 1L;
   private List<Product> products = new LinkedList<Product>();
@@ -9,10 +9,11 @@ public class ProductList implements Serializable {
 
   private ProductList() {}
     
-  public Iterator getProducts() {
+  public Iterator<Product> getProducts() {
     return products.iterator();
   }
   
+  //Singleton
   public static ProductList instance() {
     if (productList == null) {
       return (productList = new ProductList());
@@ -26,41 +27,13 @@ public class ProductList implements Serializable {
     return true;
   }
 
-    public String toString() {
+  public String toString() {
     return products.toString();
-  }
-
-  private void writeObject(java.io.ObjectOutputStream output) {
-    try {
-      output.defaultWriteObject();
-      output.writeObject(productList);
-    } catch(IOException ioe) {
-      System.out.println(ioe);
-    }
-  }
-  
-  private void readObject(java.io.ObjectInputStream input) {
-    try {
-      if (productList != null) {
-        return;
-      } else {
-        input.defaultReadObject();
-        if (productList == null) {
-          productList = (ProductList) input.readObject();
-        } else {
-          input.readObject();
-        }
-      }
-    } catch(IOException ioe) {
-      System.out.println("in ProductList readObject \n" + ioe);
-    } catch(ClassNotFoundException cnfe) {
-      cnfe.printStackTrace();
-    }
   }
   
   public Product searchProduct(String productID)
 	{
-		Iterator productIterator = products.iterator();
+		Iterator<Product> productIterator = products.iterator();
 
 		while (productIterator.hasNext())
 		{
@@ -70,9 +43,6 @@ public class ProductList implements Serializable {
 				return product;
 			}
 		}
-
 		return null;
 	}
-
-
 }
