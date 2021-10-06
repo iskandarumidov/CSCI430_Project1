@@ -55,14 +55,14 @@ public class Product implements Serializable {
     return assignedSuppliers.add(productSupplier);
   }
 
-  public boolean unassignSupplier(String productID, String supplierID) {
+  public boolean unassignSupplier(String supplierID) {
     Iterator<ProductSupplier> productSupplierIterator = assignedSuppliers.iterator();
 
     while (productSupplierIterator.hasNext()) {
       ProductSupplier productSupplier = (ProductSupplier) (productSupplierIterator.next());
       Supplier supplier = productSupplier.getSupplier();
       Product product = productSupplier.getProduct();
-      if (product.getProductID().equals(productID) && supplier.getSupplierID().equals(supplierID)) {
+      if (product.getProductID().equals(this.getProductID()) && supplier.getSupplierID().equals(supplierID)) {
         return assignedSuppliers.remove(productSupplier);
       }
     }

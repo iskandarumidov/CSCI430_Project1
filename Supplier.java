@@ -55,7 +55,7 @@ public class Supplier implements Serializable  {
 		return suppliedProducts.add(productSupplier);
 	}
 
-	public boolean unassignProduct(String productID, String supplierID)
+	public boolean unassignProduct(String productID)
 	{
 		Iterator productSupplierIterator = suppliedProducts.iterator();
 
@@ -64,7 +64,7 @@ public class Supplier implements Serializable  {
 			ProductSupplier supplies = (ProductSupplier)(productSupplierIterator.next());
 			Supplier supplier = supplies.getSupplier();
 			Product product = supplies.getProduct();
-			if (product.getProductID().equals(productID) && supplier.getSupplierID().equals(supplierID))
+			if (product.getProductID().equals(productID) && supplier.getSupplierID().equals(this.getSupplierID()))
 			{
 				return suppliedProducts.remove(supplies);
 			}
