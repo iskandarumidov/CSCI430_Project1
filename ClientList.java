@@ -69,4 +69,17 @@ public Client searchClient(String clientID) {
       }
       return null;
   }
+
+  public Iterator getOutstandingBalanceList() {
+    List<Client> outstandingBalance = new LinkedList<Client>();
+    Iterator clients = clientList.getClients();  
+      
+      while (clients.hasNext()){
+	  Client client = (Client)(clients.next());
+          if (client.hasOutstandingBalance()==true){
+              outstandingBalance.add(client);
+          } 
+      }
+      return outstandingBalance.iterator();
+  }
 }

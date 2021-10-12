@@ -3,6 +3,8 @@ import java.io.*;
 
 public class Client implements Serializable{
   private static final long serialVersionUID = 1L;
+  private List<Transaction> transaction = new LinkedList<Transaction>();
+  private Account account;
   private String name;
   private String address;
   private String phone;
@@ -13,6 +15,7 @@ public class Client implements Serializable{
     this.name = name;
     this.address = address;
     this.phone = phone;
+    account = new Account();
     id = CLIENT_STRING + ClientIdServer.instance().getId();
   }
 
@@ -37,7 +40,6 @@ public class Client implements Serializable{
   public void setPhone(String newPhone) {
     phone = newPhone;
   }
-  //TODO Iskandar - should this accept another Client instance rather than String?
   public boolean equals(String id) {
     return this.id.equals(id);
   }
@@ -45,4 +47,28 @@ public class Client implements Serializable{
     String string = "Client name " + name + " address " + address + " id " + id + " Phone Number " + phone;
     return string;
   }
+  
+  public Transaction createTransaction(String description, float dollarAmount){
+      Transaction transaction = new Transaction(description, dollarAmount);
+      return transaction;
+  }  
+
+   public boolean addTransactionToList(Transaction transaction){
+      return transaction.add(transaction);
+  }
+  
+  public Iterator getTransactions()
+  {
+      return transaction.iterator();
+  }
+
+    public boolean hasOutstandingBalance(){
+      return account.hasOutstandingBalance();
+  }
+
+  public float getAccountBalance()
+ {
+     return account.getBalance();
+ }
+ 
 }
