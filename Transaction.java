@@ -4,12 +4,11 @@ import java.io.Serializable;
 
 public class Transaction implements Serializable{
     private String description;
-    private float dollarAmount;
+    private double dollarAmount;
     private Date date;
-    private Client client;
     private static final long serialVersionUID = 1L;
     
-    public  Transaction (String description, float dollarAmount) {
+    public Transaction(String description, double dollarAmount) {
     this.description = description;
     this.dollarAmount = dollarAmount;
     this.date = new Date();
@@ -19,7 +18,7 @@ public class Transaction implements Serializable{
         this.description = description;
     }
     
-    public void setDollarAmount(float dollarAmount){
+    public void setDollarAmount(double dollarAmount){
         this.dollarAmount = dollarAmount;
     }
         
@@ -27,18 +26,20 @@ public class Transaction implements Serializable{
         return this.description;
     }
     
-    public float getDollarAmount(){
+    public double getDollarAmount(){
         return this.dollarAmount;
     }
     
     public Date getDate(){
         return this.date;
     }
+	
+	public String toString(){
+		return "Date: " + date + "\nDescription: " + description + "\nOrder Total: $" + String.format("%.2f", dollarAmount);
+	}
 
-    public String toString() {
-    String string = "Client ID: " + client.getId() + "\n Name: " + client.getName() + "\n "+ "\n Account Balance: " + String.format("%.2f", client.getBalance());
-    return string;
-  }
-
-    
+	//public String toString() {
+    //String string = "Client ID: " + client.getId() + "\n Name: " + client.getName() + "\n "+ "\n Account Balance: $" + String.format("%.2f", client.getBalance());
+    //return string;
+    //}
 }

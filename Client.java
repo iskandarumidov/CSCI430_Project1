@@ -3,19 +3,19 @@ import java.io.*;
 
 public class Client implements Serializable{
   private static final long serialVersionUID = 1L;
-  private List<Transaction> transactions = new LinkedList<Transaction>();
   private String name;
   private String address;
   private String phone;
   private String id;
-  private float balance;
+  private double balance;
   private static final String CLIENT_STRING = "C";
+  private List<Transaction> transactions = new LinkedList<Transaction>();
     
   public  Client (String name, String address, String phone) {
     this.name = name;
     this.address = address;
     this.phone = phone;
-    this.balance = balance;
+	this.balance = 0;
     id = CLIENT_STRING + ClientIdServer.instance().getId();
   }
 
@@ -31,6 +31,9 @@ public class Client implements Serializable{
   public String getId() {
     return id;
   }
+  public double getBalance(){
+    return balance;
+  }
   public void setName(String newName) {
     name = newName;
   }
@@ -40,38 +43,44 @@ public class Client implements Serializable{
   public void setPhone(String newPhone) {
     phone = newPhone;
   }
-
-  public void setBalance(float newBalance){
+  
+  public void setBalance(double newBalance){
     balance = newBalance;
-}    
+  }    
     
-public float getBalance(){
-    return balance;
-}
-    
-public boolean hasOutstandingBalance() {
-    return (balance < 0);
+  public boolean hasOutstandingBalance() {
+  return (balance > 0);
   }
-
+  //TODO Iskandar - should this accept another Client instance rather than String?
   public boolean equals(String id) {
     return this.id.equals(id);
   }
-  public String toString() {
-    String string = "Client name " + name + " address " + address + " id " + id + " Phone Number " + phone;
-    return string;
-  }
-  
-  public Transaction createTransaction(String description, float dollarAmount){
-      Transaction transaction = new Transaction(description, dollarAmount);
-      return transaction;
-  }  
-
-   public boolean addTransactionToList(Transaction transaction){
+  public boolean addTransactionToList(Transaction transaction){
       return transactions.add(transaction);
-  }
-  
+  }  
   public Iterator getTransactions()
   {
       return transactions.iterator();
+  }
+  
+  // This method prints the client's transaction history
+  public void printTransactions(){
+	  System.out.println("Transactions for " + name + ":");
+	  Iterator<Transaction> iterator = getTransactions();
+		while(iterator.hasNext()){
+			Transaction currentTransaction = (Transaction)iterator.next();
+			System.out.println(currentTransaction.toString());
+			System.out.println();
+		}
+		System.out.println();	  
+  }
+  
+  //public String toString() {
+    //String string = "Client ID: " + client.getId() + "\n Name: " + client.getName() + "\n "+ "\n Account Balance: $" + String.format("%.2f", client.getBalance());
+    //return string;
+    //}
+  public String toString() {
+    String string = "Client name " + name + " Address " + address + " id " + id + " Phone Number " + phone + " Outstanding Balance: $" + String.format("%.2f", balance);
+    return string;
   }
 }

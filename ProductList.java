@@ -27,16 +27,15 @@ public class ProductList implements Serializable {
     return true;
   }
 
+  @Override
   public String toString() {
-    String finalString = "";
-    Iterator productIterator = products.iterator();
-    while (productIterator.hasNext()){
-      Product product = (Product)(productIterator.next());
-      finalString = finalString.concat(product.toString());
-      finalString = finalString.concat("\n");
-    }
-    
-    return finalString;
+  	String finalString = "";
+	Iterator productIterator = getProducts();
+        while (productIterator.hasNext()){
+             Product product = (Product)(productIterator.next());
+             finalString = finalString + product.toString() + "\n";
+        }
+	return finalString; 
   }
   
   public Product searchProduct(String productID)

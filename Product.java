@@ -22,7 +22,7 @@ public class Product implements Serializable {
   public String getProductID() {
     return id;
   }
-  
+
   public String getName() {
     return name;
   }
@@ -43,19 +43,8 @@ public class Product implements Serializable {
     return assignedSuppliers.iterator();
   }
 
-  public Iterator<Quantity> getWaitlistedOrders(){ 
+  public Iterator<Quantity> getWaitlist() {
     return waitlistedOrders.iterator();
-  }  
-
-  public int getItemAvailability(){
-    if(amountInStock > 0){
-      System.out.println("Product is available. In Stock: ");
-      return amountInStock;
-    }
-    else{
-      System.out.println("Product is NOT available");
-      return 0;
-    }
   }
 
   public void setAmountInStock(int amtInStock){
@@ -68,10 +57,6 @@ public class Product implements Serializable {
 
   public boolean addProductSupplier(ProductSupplier productSupplier) {
     return assignedSuppliers.add(productSupplier);
-  }
-
-  public boolean addWaitlistedOrder(Quantity waitlistedOrder){
-    return waitlistedOrders.add(waitlistedOrder);
   }
 
   public boolean unassignSupplier(String supplierID) {
@@ -87,8 +72,34 @@ public class Product implements Serializable {
     }
     return false;
   }
+    
+  public boolean addWaitlistedOrder(Quantity waitlistedOrder){
+    return waitlistedOrders.add(waitlistedOrder);
+  }
+  
+  // NEW METHOD!!!
+  /* This method adds an item to the product's waitlist
+   * written by Shannon Purrington
+   */
+  //public boolean addToWaitlist(Quantity item) {
+	//  waitlistedOrders.add(item);
+	//  return true;
+  //}
+  
+  // This method prints the product's waitlisted orders
+  public void printWaitlist(){
+	  System.out.println("Waitlist for " + name + ":");
+	  Iterator<Quantity> iterator = getWaitlist();
+		while(iterator.hasNext()){
+			Quantity currentOrder = (Quantity)iterator.next();
+			System.out.println(currentOrder.toString());
+			System.out.println();
+		}
+		System.out.println();	  
+  }
 
   public String toString() {
-    return "Product ID: " + id + " Name: " + name + " Description: " + description + " Amount in stock: " + amountInStock + " Sales Price: " + salesPrice;
+    return "Product ID: " + id + ", Name: " + name + ", Description: " + description 
+	+ "\nAmount in stock: " + amountInStock + ", Sales Price: $" + String.format("%.2f", salesPrice) + "\n";
   }
 }

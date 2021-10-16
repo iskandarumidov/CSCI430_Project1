@@ -8,76 +8,60 @@
 
 import java.util.*;
 import java.io.*;
+
 public class ShoppingCart implements Serializable {
   private static final long serialVersionUID = 1L;
   private Client client;
   private double totalCost;
   private List<Quantity> items = new LinkedList<>();
-  private ProductList productList = ProductList.instance();
 
 
-  public ShoppingCart(Client client) {
+  public ShoppingCart(Client client){
     this.client = client;
     this.totalCost = 0;  //initialize to 0, this will be calculated and set when items are added to the cart
   }
 
-  public Client getClient() {
+  public Client getClient(){
     return client;
   }
   
-  public double getTotal() {
+  public double getTotal(){
     return totalCost;
   }
   
-  public Iterator<Quantity> getItems() {
+  public Iterator<Quantity> getItems(){
 	  return items.iterator();
   }
   
-  public void setTotal(double amount) {
+  public void setTotal(double amount){
 	  totalCost = amount;
   }
 
-  public String toString() {
+  public String toString(){
       return "Client: " + client + " Total: " + totalCost;
   }
   
-  public boolean addToCart(Product product, int qty) {
-	  Quantity item = new Quantity(product, qty);
+  // This method adds an item to the client's shopping cart
+  public boolean addToCart(Product product, int qty){
+	  Client client = this.client;
+	  Quantity item = new Quantity(client, product, qty);
 	  items.add(item);
 	  return true;
   }
   
-  /* Currently, this method is set up to completely remove the item from the cart (no matter the quantity)
-   * As we further develop the system further, I may modify this method to allow the client to update the quantity
-   * in the cart by setting the qty attribute of the Quantity object to a different value, or give the option to remove it 
-   * completely
-   */  
-  public boolean removeQuantity(Product product) {
-	  Iterator<Quantity> it = items.iterator();
+  // This method is set up to completely remove the item from the cart (no matter the quantity)  
+  public boolean removeQuantity(Product product){
+	  Iterator<Quantity> it = this.getItems(); 
 	  while (it.hasNext()){
 		  Quantity currentItem = (Quantity) it.next();
 		  if (product.getProductID().equals(currentItem.getProduct().getProductID())){
 			  it.remove(); 
 			  return true;
 		  }	
-	  }	   
-	  
-	  /* Will also need to multiply the qty (get from the Quantity object, currentItem) by the salesPrice (get  
-	   * from the Product object, product) and deduct that amount from the existing totalCost.  Then set totalCost to the
-	   * new amount.  After the shopping cart is processed, the quantity of each product will also need to be deducted from 
-     * the amount in stock and set in each Product object. This code for these operations will be contained in their own 
-     * functions and will be written as we develop the system further.
-	   */
+	  }	
 	  return false;
   }
   
-  public double calculateTotal(){
-	  double total = 0;
-	  //code to calculate the total cost will be written as we develop the system further
-	  return total;
-	  
-  }
-
   public boolean updateCart(String productId, int quantityOfItems) {
     Iterator<Quantity> quantityIterator = this.getItems();
     Quantity quantity = null;
@@ -87,17 +71,105 @@ public class ShoppingCart implements Serializable {
       if (quan.getProduct().getProductID() == productId){
         quantity = quan;
       }
-		}
-    // Quantity quantity = this.searchQuantity(productId);
+		}	
     if (quantity == null){
-      //Product not yet in cart. Add it
-      Product product = productList.searchProduct(productId);
-      return this.addToCart(product, quantityOfItems);
+	  return false;
     }else{
       //Product is in cart already. Now update quantity of items
       quantity.setQty(quantityOfItems);
       return true;
     }
+  }
+
+  public boolean clearCart(){
+	Iterator<Quantity> it = this.getItems(); 
+	while (it.hasNext()){
+		it.remove(); 
+	}	
+	return true;
+  }
+  
+	public void printCart(){
+		if (this.items.isEmpty()){
+			System.out.println("Shopping Cart is empty");
+		}
+		Iterator<Quantity> iterator = this.getItems(); 
+		while(iterator.hasNext()){
+			Quantity currentItem = (Quantity)iterator.next();
+			System.out.println("Item: " + currentItem.getProduct().getName() + ", Quantity: " + currentItem.getQty()); 
+		}
+		System.out.println();
+	}
+
+  // !!!NEEDS ADDITIONAL INFO!!!
+  // This method processes the shopping cart (like checking out)
+  /* Needs to do the following: 
+   * check available quantity - DONE
+   * add to invoice - DONE
+   * add to waitlist (if sufficient quantity unavailable) - DONE
+   * empty the cart - DONE
+   * debit the client account (set outstanding balance) - DONE
+   * record the transaction - DONE
+   */
+  public void processOrder(){
+	double totalDue = 0;  
+	List<Quantity> invoice = new LinkedList<>();
+ 	Iterator<Quantity> iterator = this.getItems(); 
+		while(iterator.hasNext()){
+			Quantity currentItem = (Quantity)iterator.next();
+			Product currentProduct = currentItem.getProduct();
+			double subtotal = 0;
+			int amtAvailable = currentItem.checkAvailability();
+			int amtRequested = currentItem.getQty();
+			if (amtRequested <= amtAvailable){
+				invoice.add(currentItem);
+				subtotal = currentProduct.getSalesPrice() * amtRequested;
+				totalDue += subtotal;
+				currentProduct.setAmountInStock(amtAvailable - amtRequested);
+			}
+			else {
+				// add to waitlist
+				currentItem.getProduct().addWaitlistedOrder(currentItem);
+				System.out.println(currentItem.getProduct().getName() + " added to waitlist");
+			}
+			iterator.remove();
+		}
+	
+	this.client.setBalance(totalDue);
+	
+	printInvoice(invoice, totalDue);
+	
+	createTransaction(totalDue);
+  }
+  
+  // This method creates a Transaction object for the order
+  private boolean createTransaction(double totalDue){
+	Scanner keyboard = new Scanner(System.in);
+	System.out.println("Please enter a description for this order: ");
+	String description = keyboard.nextLine();
+	keyboard.close();	
+		
+	Transaction transaction = new Transaction(description, totalDue);
+	this.client.addTransactionToList(transaction);
+	
+	return true;
+  }
+  
+  
+  // This method prints an invoice after an order has been processed
+  private void printInvoice(List<Quantity> invoice, double totalDue){
+	  Iterator<Quantity> iterator = invoice.iterator();
+		while(iterator.hasNext()){
+			Quantity currentItem = (Quantity)iterator.next();
+			int quantity = currentItem.getQty();
+			double unitPrice = currentItem.getProduct().getSalesPrice();
+			double subtotal = quantity * unitPrice;
+			System.out.println("Item: " + currentItem.getProduct().getName() + 
+			   ", Quantity: " + quantity + ", Unit Price: $" + String.format("%.2f", unitPrice) 
+			   + ", Subtotal: $" + String.format("%.2f", subtotal)); 
+		}
+		System.out.println("Total Amount Due: $" + String.format("%.2f", totalDue));
+		System.out.println();	  
   }
    
 }
