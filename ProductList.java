@@ -28,7 +28,14 @@ public class ProductList implements Serializable {
   }
 
   public String toString() {
-    return products.toString();
+    String finalString = "";
+    for (int i = 0; i < products.size(); i++) {
+      // System.out.println(products.get(i));
+      finalString = finalString.concat(products.get(i).getProductID());
+      finalString = finalString.concat("\n");
+    }
+    return finalString;
+    // return products.toString();
   }
   
   public Product searchProduct(String productID)

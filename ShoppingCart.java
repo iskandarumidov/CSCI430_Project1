@@ -13,6 +13,7 @@ public class ShoppingCart implements Serializable {
   private Client client;
   private double totalCost;
   private List<Quantity> items = new LinkedList<>();
+  private ProductList productList = ProductList.instance();
 
 
   public ShoppingCart(Client client) {
@@ -75,6 +76,28 @@ public class ShoppingCart implements Serializable {
 	  //code to calculate the total cost will be written as we develop the system further
 	  return total;
 	  
+  }
+
+  public boolean updateCart(String productId, int quantityOfItems) {
+    Iterator<Quantity> quantityIterator = this.getItems();
+    Quantity quantity = null;
+    while (quantityIterator.hasNext())
+		{
+			Quantity quan = (Quantity)(quantityIterator.next());
+      if (quan.getProduct().getProductID() == productId){
+        quantity = quan;
+      }
+		}
+    // Quantity quantity = this.searchQuantity(productId);
+    if (quantity == null){
+      //Product not yet in cart. Add it
+      Product product = productList.searchProduct(productId);
+      return this.addToCart(product, quantityOfItems);
+    }else{
+      //Product is in cart already. Now update quantity of items
+      quantity.setQty(quantityOfItems);
+      return true;
+    }
   }
    
 }

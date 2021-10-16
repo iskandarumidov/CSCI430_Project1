@@ -40,6 +40,7 @@ class ProductListTest {
         System.out.println(productList.searchProduct("id5"));
         System.out.println(productList.searchProduct(null));
 
+        System.out.println(productList);
     }
 
 }
