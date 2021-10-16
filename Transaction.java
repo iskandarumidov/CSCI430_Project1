@@ -6,6 +6,7 @@ public class Transaction implements Serializable{
     private String description;
     private float dollarAmount;
     private Date date;
+    private Client client;
     private static final long serialVersionUID = 1L;
     
     public  Transaction (String description, float dollarAmount) {
@@ -33,6 +34,11 @@ public class Transaction implements Serializable{
     public Date getDate(){
         return this.date;
     }
+
+    public String toString() {
+    String string = "Client ID: " + client.getId() + "\n Name: " + client.getName() + "\n "+ "\n Account Balance: " + String.format("%.2f", client.getBalance());
+    return string;
+  }
 
     
 }

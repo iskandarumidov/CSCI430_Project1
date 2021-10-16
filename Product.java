@@ -22,7 +22,7 @@ public class Product implements Serializable {
   public String getProductID() {
     return id;
   }
-
+  
   public String getName() {
     return name;
   }
@@ -43,6 +43,21 @@ public class Product implements Serializable {
     return assignedSuppliers.iterator();
   }
 
+  public Iterator<Quantity> getWaitlistedOrders(){ 
+    return waitlistedOrders.iterator();
+  }  
+
+  public int getItemAvailability(){
+    if(amountInStock > 0){
+      System.out.println("Product is available. In Stock: ");
+      return amountInStock;
+    }
+    else{
+      System.out.println("Product is NOT available");
+      return 0;
+    }
+  }
+
   public void setAmountInStock(int amtInStock){
     amountInStock = amtInStock;
   }
@@ -53,6 +68,10 @@ public class Product implements Serializable {
 
   public boolean addProductSupplier(ProductSupplier productSupplier) {
     return assignedSuppliers.add(productSupplier);
+  }
+
+  public boolean addWaitlistedOrder(Quantity waitlistedOrder){
+    return waitlistedOrders.add(waitlistedOrder);
   }
 
   public boolean unassignSupplier(String supplierID) {

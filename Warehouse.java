@@ -119,3 +119,4 @@ public class Warehouse implements Serializable {
     return clientList + "\n" + productList + "\n" + supplierList;
   }
 }
+

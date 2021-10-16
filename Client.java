@@ -3,19 +3,19 @@ import java.io.*;
 
 public class Client implements Serializable{
   private static final long serialVersionUID = 1L;
-  private List<Transaction> transaction = new LinkedList<Transaction>();
-  private Account account;
+  private List<Transaction> transactions = new LinkedList<Transaction>();
   private String name;
   private String address;
   private String phone;
   private String id;
+  private float balance;
   private static final String CLIENT_STRING = "C";
     
   public  Client (String name, String address, String phone) {
     this.name = name;
     this.address = address;
     this.phone = phone;
-    account = new Account();
+    this.balance = balance;
     id = CLIENT_STRING + ClientIdServer.instance().getId();
   }
 
@@ -40,6 +40,19 @@ public class Client implements Serializable{
   public void setPhone(String newPhone) {
     phone = newPhone;
   }
+
+  public void setBalance(float newBalance){
+    balance = newBalance;
+}    
+    
+public float getBalance(){
+    return balance;
+}
+    
+public boolean hasOutstandingBalance() {
+    return (balance < 0);
+  }
+
   public boolean equals(String id) {
     return this.id.equals(id);
   }
@@ -54,21 +67,11 @@ public class Client implements Serializable{
   }  
 
    public boolean addTransactionToList(Transaction transaction){
-      return transaction.add(transaction);
+      return transactions.add(transaction);
   }
   
   public Iterator getTransactions()
   {
-      return transaction.iterator();
+      return transactions.iterator();
   }
-
-    public boolean hasOutstandingBalance(){
-      return account.hasOutstandingBalance();
-  }
-
-  public float getAccountBalance()
- {
-     return account.getBalance();
- }
- 
 }
