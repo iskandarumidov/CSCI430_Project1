@@ -1,7 +1,7 @@
 import java.util.*;
 import java.io.*;
 
-class ClientTest {
+class ClientBalanceTest {
     public static void main(String[] args)
     {
         System.out.println("TESTING ClientLIST");
