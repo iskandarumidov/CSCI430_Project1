@@ -12,6 +12,10 @@ public class Quantity implements Serializable {
     this.product = product;
     this.qty = qty;
   }
+  
+  public Client getClient() {
+	  return client;
+  }
 
   public Product getProduct() {
     return product;
@@ -24,7 +28,6 @@ public class Quantity implements Serializable {
 	  qty = updatedQty;
   }
   
-  // NEW METHOD!!!
   // This method checks the amount in stock for a given product
   public int checkAvailability(){
 	  return getProduct().getAmountInStock();

@@ -9,6 +9,7 @@ public class Client implements Serializable{
   private String id;
   private double balance;
   private static final String CLIENT_STRING = "C";
+  private ShoppingCart cart;
   private List<Transaction> transactions = new LinkedList<Transaction>();
     
   public  Client (String name, String address, String phone) {
@@ -16,7 +17,8 @@ public class Client implements Serializable{
     this.address = address;
     this.phone = phone;
 	this.balance = 0;
-    id = CLIENT_STRING + ClientIdServer.instance().getId();
+	this.cart = null;
+    id = CLIENT_STRING + ClientIdServer.instance().getId();	
   }
 
   public String getName() {
@@ -34,6 +36,11 @@ public class Client implements Serializable{
   public double getBalance(){
     return balance;
   }
+  
+  public ShoppingCart getCart(){
+	return cart;
+  }
+
   public void setName(String newName) {
     name = newName;
   }
@@ -47,6 +54,10 @@ public class Client implements Serializable{
   public void setBalance(double newBalance){
     balance = newBalance;
   }    
+  
+  public void setCart(ShoppingCart assignedCart){
+	  cart = assignedCart;
+  }
     
   public boolean hasOutstandingBalance() {
   return (balance > 0);
@@ -75,10 +86,6 @@ public class Client implements Serializable{
 		System.out.println();	  
   }
   
-  //public String toString() {
-    //String string = "Client ID: " + client.getId() + "\n Name: " + client.getName() + "\n "+ "\n Account Balance: $" + String.format("%.2f", client.getBalance());
-    //return string;
-    //}
   public String toString() {
     String string = "Client name " + name + " Address " + address + " id " + id + " Phone Number " + phone + " Outstanding Balance: $" + String.format("%.2f", balance);
     return string;

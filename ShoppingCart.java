@@ -101,17 +101,8 @@ public class ShoppingCart implements Serializable {
 		System.out.println();
 	}
 
-  // !!!NEEDS ADDITIONAL INFO!!!
   // This method processes the shopping cart (like checking out)
-  /* Needs to do the following: 
-   * check available quantity - DONE
-   * add to invoice - DONE
-   * add to waitlist (if sufficient quantity unavailable) - DONE
-   * empty the cart - DONE
-   * debit the client account (set outstanding balance) - DONE
-   * record the transaction - DONE
-   */
-  public void processOrder(){
+  public void processOrder(String description){
 	double totalDue = 0;  
 	List<Quantity> invoice = new LinkedList<>();
  	Iterator<Quantity> iterator = this.getItems(); 
@@ -139,16 +130,11 @@ public class ShoppingCart implements Serializable {
 	
 	printInvoice(invoice, totalDue);
 	
-	createTransaction(totalDue);
+	createTransaction(description, totalDue);
   }
   
   // This method creates a Transaction object for the order
-  private boolean createTransaction(double totalDue){
-	Scanner keyboard = new Scanner(System.in);
-	System.out.println("Please enter a description for this order: ");
-	String description = keyboard.nextLine();
-	keyboard.close();	
-		
+  private boolean createTransaction(String description, double totalDue){
 	Transaction transaction = new Transaction(description, totalDue);
 	this.client.addTransactionToList(transaction);
 	
@@ -168,7 +154,12 @@ public class ShoppingCart implements Serializable {
 			   ", Quantity: " + quantity + ", Unit Price: $" + String.format("%.2f", unitPrice) 
 			   + ", Subtotal: $" + String.format("%.2f", subtotal)); 
 		}
-		System.out.println("Total Amount Due: $" + String.format("%.2f", totalDue));
+		if (totalDue !=0){
+			System.out.println("Total Amount Due: $" + String.format("%.2f", totalDue));
+		}
+		else {
+			System.out.println("No amount due at this time");
+		}
 		System.out.println();	  
   }
    
