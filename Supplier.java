@@ -76,4 +76,15 @@ public class Supplier implements Serializable  {
 	public String toString() {
 		return "Supplier ID: " + supplierID + " | Name: " + name + " | Address: " + address + " | Phone Number: " + phoneNumber;
 	}
+
+		public void printAssignedProducts(){
+	  System.out.println("Assigned Products for Supplier " + supplierID + " " + name + ":");
+	  Iterator<ProductSupplier> iterator = suppliedProducts.iterator();
+		while(iterator.hasNext()){
+			ProductSupplier currentProductSupplier = (ProductSupplier)iterator.next();
+			Product currentProduct = currentProductSupplier.getProduct();
+			System.out.println(currentProduct.getProductID() + " " + currentProduct.getName() + " " + currentProduct.getSalesPrice());
+		}
+		System.out.println();	  
+  }
 }

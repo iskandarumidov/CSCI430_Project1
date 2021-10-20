@@ -124,4 +124,15 @@ public class Product implements Serializable {
     return "Product ID: " + id + ", Name: " + name + ", Description: " + description 
 	+ "\nAmount in stock: " + amountInStock + ", Sales Price: $" + String.format("%.2f", salesPrice) + "\n";
   }
+
+    public void printAssignedSuppliers(){
+	  System.out.println("Assigned Suppliers for Product " + id + " " + name + " " + salesPrice + ":");
+	  Iterator<ProductSupplier> iterator = assignedSuppliers.iterator();
+		while(iterator.hasNext()){
+			ProductSupplier currentProductSupplier = (ProductSupplier)iterator.next();
+      Supplier currentSupplier = currentProductSupplier.getSupplier();
+			System.out.println(currentSupplier.getSupplierID() + " " + currentSupplier.getName());
+		}
+		System.out.println();	  
+  }
 }
