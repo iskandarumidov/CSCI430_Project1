@@ -8,8 +8,9 @@ public class Warehouse implements Serializable {
   public static final int SUPPLIER_NOT_FOUND = 3;
   public static final int ITEM_ADDED_TO_CART  = 4;
   public static final int ITEM_REMOVED_FROM_CART  = 5;
-  public static final int OPERATION_COMPLETED= 6;
-  public static final int OPERATION_FAILED= 7;
+  public static final int ITEM_QUANTITY_UPDATED = 6; 
+  public static final int OPERATION_COMPLETED= 7;
+  public static final int OPERATION_FAILED= 8;
   private ClientList clientList;
   private ProductList productList;
   private SupplierList supplierList;
@@ -33,6 +34,8 @@ public class Warehouse implements Serializable {
   public Client addClient(String name, String address, String phone) {
     Client client = new Client(name, address, phone);
     if (clientList.insertClient(client)) {
+    ShoppingCart cart = new ShoppingCart(client);
+    client.setCart(cart);
 	  return (client);
 	}
    return null;
@@ -52,6 +55,93 @@ public class Warehouse implements Serializable {
       return (supplier);
     }
     return null;
+  }
+
+  public boolean addToCart(String clientID, String productID, int quantity){
+    Client client = clientList.searchClient(clientID);
+    ShoppingCart cart = client.getCart();
+    Product product = productList.searchProduct(productID);
+    cart.addToCart(product, quantity);
+    return true;
+  }
+
+  public boolean removeFromCart(String clientID, String productID){
+    Client client = clientList.searchClient(clientID);
+    ShoppingCart cart = client.getCart();
+    Product product = productList.searchProduct(productID);
+    cart.removeQuantity(product);
+    return true;
+  }
+
+  public boolean updateCart(String clientID, String productID, int quantity){
+    Client client = clientList.searchClient(clientID);
+    ShoppingCart cart = client.getCart();
+    boolean updated = cart.updateCart(productID, quantity);	
+      if (!updated){
+        // Product not in cart.  Add it to cart.
+        Product product = productList.searchProduct(productID);
+        cart.addToCart(product, quantity);
+      }
+      return true;
+  }
+
+  public void viewCart(String clientID){
+    Client client = clientList.searchClient(clientID);
+    ShoppingCart cart = client.getCart();
+    cart.printCart();
+  }
+
+  public void processCart(String clientID, String description) {
+    Client client = clientList.searchClient(clientID);
+    ShoppingCart cart = client.getCart();
+    cart.processOrder(description);
+  }
+
+  public void getTransactions(String clientID) {
+    Client client = clientList.searchClient(clientID);
+    client.printTransactions();
+  }
+
+  public void getOutstandingBalances() {
+    Iterator clientIterator = clientList.getClients();
+		//Tests client's remaining balance
+		double finalBalance = 0;
+		String finalName;
+        while (clientIterator.hasNext())
+		{
+			 Client client = (Client)(clientIterator.next());
+			 finalBalance = client.getBalance();
+			 finalName = client.getName();
+			 if(finalBalance > 0)
+				 System.out.println(finalName + ", Outstanding Balance: " + finalBalance); 
+		}
+  }
+
+  public boolean assignProductSupplier(String supplierID, String productID, double supplyPrice){
+    Supplier supplier = supplierList.searchSupplier(supplierID);
+    Product product = productList.searchProduct(productID);
+    ProductSupplier newPair = new ProductSupplier(supplier, product, supplyPrice);
+    product.addProductSupplier(newPair);
+    supplier.addProductSupplier(newPair);
+    product.printAssignedSuppliers();
+    supplier.printAssignedProducts();
+    return true;
+  }
+
+  public boolean receiveShipment(String productID, int qtyReceived){
+		Product product = productList.searchProduct(productID);
+    int newStockAmt = product.getAmountInStock() + qtyReceived;
+		product.setAmountInStock(newStockAmt);
+		int remainingQty = product.processWaitlist(newStockAmt);
+		product.setAmountInStock(remainingQty);	
+		return true;
+	}
+
+  public boolean acceptPayment(String clientID, double paymentAmt){
+    Client client = clientList.searchClient(clientID);
+    double updatedBalance = client.getBalance() - paymentAmt;
+    client.setBalance(updatedBalance);
+    return true;
   }
 
   public Iterator getClients() {

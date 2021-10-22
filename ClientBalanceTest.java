@@ -49,7 +49,7 @@ class ClientBalanceTest {
 			 finalBalance = client.getBalance();
 			 finalName = client.getName();
 			 if(finalBalance > 0)
-				 System.out.println(finalName + ", Your Outstanding Balance is : " + finalBalance); 
+				 System.out.println(finalName + ", Outstanding Balance: " + finalBalance); 
 		}
         
         //Tests searchProductList() and toString()

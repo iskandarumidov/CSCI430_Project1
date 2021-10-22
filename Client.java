@@ -76,7 +76,8 @@ public class Client implements Serializable{
   
   // This method prints the client's transaction history
   public void printTransactions(){
-	  System.out.println("Transactions for " + name + ":");
+	  String message = new String("Transactions for " + name + ":");
+    System.out.println(message.toUpperCase() );
 	  Iterator<Transaction> iterator = getTransactions();
 		while(iterator.hasNext()){
 			Transaction currentTransaction = (Transaction)iterator.next();

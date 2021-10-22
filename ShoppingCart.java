@@ -125,8 +125,8 @@ public class ShoppingCart implements Serializable {
 			}
 			iterator.remove();
 		}
-	
-	this.client.setBalance(totalDue);
+	double newBalance = this.client.getBalance() + totalDue;
+	this.client.setBalance(newBalance);
 	
 	printInvoice(invoice, totalDue);
 	
@@ -144,6 +144,7 @@ public class ShoppingCart implements Serializable {
   
   // This method prints an invoice after an order has been processed
   private void printInvoice(List<Quantity> invoice, double totalDue){
+	  System.out.println("INVOICE FOR THIS ORDER");
 	  Iterator<Quantity> iterator = invoice.iterator();
 		while(iterator.hasNext()){
 			Quantity currentItem = (Quantity)iterator.next();

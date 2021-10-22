@@ -47,6 +47,9 @@ public class Product implements Serializable {
     return waitlistedOrders.iterator();
   }
 
+  public void setID(String productID){
+    id = productID;
+  }
   public void setAmountInStock(int amtInStock){
     amountInStock = amtInStock;
   }
@@ -115,7 +118,7 @@ public class Product implements Serializable {
 				System.out.println("Order has been left on waitlist\n");
 			}			
 		}
-		keyboard.close();
+		// keyboard.close();
 		return remainingQty;		
 	}
 
