@@ -1,7 +1,7 @@
 import java.util.*;
 import java.text.*;
 import java.io.*;
-public class Loginstate extends LibState{
+public class Loginstate extends WarehouseState{
   private static final int CLIENT = 0;
   private static final int MANAGER = 1;
   private static final int SALESPERSON = 2;
