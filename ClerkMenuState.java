@@ -1,5 +1,3 @@
-// NEED TO CODE WAREHOUSE CONTEXT
-// NEED TO PUT A setClient() METHOD IN WAREHOUSE CONTEXT!!!
 // MAKE SURE CLIENT STATE IS STATE 1 IN LOGIN STATE
 // NEED TO TEST viewWaitlist() AND clientMenu() METHODS
 // WHEN TESTING, CHECK IF YOU SHOULD CALL WAREHOUSE METHODS WITH Warehouse.instance() or warehouse!!!
@@ -69,7 +67,7 @@ public class ClerkMenuState extends WarehouseState {
       }
     } while (true);
   }
-  
+    
   public Calendar getDate(String prompt) {
     do {
       try {
@@ -162,14 +160,14 @@ public class ClerkMenuState extends WarehouseState {
     String clientID = getToken("Please input the client id: ");
     if (Warehouse.instance().searchClients(clientID) != null){
       (WarehouseContext.instance()).setClient(clientID);      
-      (WarehouseContext.instance()).changeState(1);
+      (WarehouseContext.instance()).changeState(0);
     }
     else 
       System.out.println("Invalid client ID."); 
   }
 
   public void logout() {
-    (WarehouseContext.instance()).changeState(0); // exit with a code 0
+    (WarehouseContext.instance()).changeState(2); // exit with a code 0
   }
  
 
@@ -178,22 +176,22 @@ public class ClerkMenuState extends WarehouseState {
     help();
     while ((command = getCommand()) != EXIT) {
       switch (command) {
-        case ADD_CLIENT:        		addClient();
-										break;
+        case ADD_CLIENT:        		    addClient();
+										                    break;
         case GET_OUTSTANDING_BALANCES:	getOutstandingBalances();
-										break;
-        case ACCEPT_SHIPMENT: 	  		acceptShipment();
-										break;
-        case SHOW_CLIENTS:  			showClients();
-										break;
-		case SHOW_PRODUCTS:				showProducts();
-								        break; 	
-	    case VIEW_WAITLIST:				viewWaitlist();
-										break; 	
+										                    break;
+        case ACCEPT_SHIPMENT: 	  		  acceptShipment();
+										                    break;
+        case SHOW_CLIENTS:  			      showClients();
+										                    break;
+		    case SHOW_PRODUCTS:				      showProducts();
+								                        break; 	
+	      case VIEW_WAITLIST:				      viewWaitlist();
+										                    break; 	
         case CLIENT_MENU:              	clientMenu();
-										break;		
-        case HELP:             			help();
-										break;
+										                    break;		
+        case HELP:             			    help();
+										                    break;
       }
     }
     logout();
