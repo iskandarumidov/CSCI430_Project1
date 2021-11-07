@@ -177,7 +177,7 @@ public void getClientData() {
 	warehouse.getClients();
   }
   
- public void getClientWaitlist() {
+ public void getClientsWaitlist() {
 	 warehouse.getClientWaitlist();
   }
 
@@ -250,7 +250,7 @@ public void getClientData() {
 		break;	
 		case GET_CLIENT: getClientData();
 		break;
-		case GET_WAITLIST: getClientWaitlist();
+		case GET_WAITLIST: getClientsWaitlist();
 		break;
         case HELP: help();
 		break;
