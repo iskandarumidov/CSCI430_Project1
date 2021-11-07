@@ -100,7 +100,7 @@ public class ManagerState extends loginState {
         System.out.println(SUPPLIER_LIST + " to show supplier List");
         System.out.println(PRODUCT_SUPPLIER_LIST + " to show Product's List of Suppliers w/purchase prices\n");
         System.out.println(SUPPLIER_PRODUCT_LIST + " to show Supplier's List of Products w/purchase prices\n");
-        System.out.println(UPDATE_PRODUCT + " to Update prducts and purchase prices fo a supplier\n");
+        System.out.println(UPDATE_PRODUCT + " to Update prducts and purchase prices for a supplier\n");
         System.out.println(SALESCLERK_MENU + " to switch to the Sales-Clerk menu\n");
         System.out.println(HELP + "for help")
     }
@@ -112,7 +112,7 @@ public class ManagerState extends loginState {
             String name = getToken("Enter product name");
             String description = getToken("Enter product description");
             double salesPrice =  Double.parseDouble(getToken("Enter sales price"));
-	            int amountInStock = Integer.valueOf(getToken("Enter amount in stock"));
+	        int amountInStock = Integer.valueOf(getToken("Enter amount in stock"));
             result = warehouse.addProduct(id, name, description, amountInStock, salesPrice);
             if (result != null) {
                 System.out.println(result);
@@ -158,7 +158,41 @@ public class ManagerState extends loginState {
 		return suppliedProducts.iterator();
 	}
 
+    public void updateProduct(){
+        do {
+            Supplier supplier = getToken("Enter Supplier.")
+            supplier.getSuppliedProducts();
 
+            System.out.println("\nEnter a number between 0 and 3 as explained below.\n");
+            System.out.println(EXIT + " to Exit\n");
+            System.out.println(ADD_PRODUCT + " to add a product to product-supplier\n");
+            System.out.println(REMOVE_PRODUCT + " to remove a product from product-supplier\n");
+            System.out.println(UPDATE_PRICE + " to update purchase price\n");
+            
+            int command;
+            while((command = getCommand()) != EXIT){
+                switch (command){
+                    case ADD_PRODUCT:           Product product = addProduct();
+                                                double price = product.getSalesPrice();
+                                                ProductSupplier productSupplier = new ProductSupplier(supplier, product, price);
+                                                supplier.addProductSupplier(productSupplier);
+                                                break;
+                    case REMOVE_PRODUCT:        String productID = getToken("Enter Product Id");
+                                                Product product = productList.searchProduct(productID);
+                                                supplier.unassignProduct(productID);
+                                                break;
+                    case UPDATE_PRICE:          String productID = getToken("Enter Product Id");
+                                                Product product = productList.searchProduct(productID);
+                                                double purchasePrice = getToken("Enter new purchase-price");
+                                                supplier.unassingProduct(productID);
+                                                ProductSupplier productaSupplier = new ProductSupplier(supplier, product, price);
+                                                supplier.addProductSupplier(productSupplier);
+                                                break;
+                }
+            }
+
+        } while(true);
+    }
 
     public boolean salesClerkMenu(){
         String userID = getToken("Please input the Sales-Clerk Id: ");
@@ -211,4 +245,4 @@ public class ManagerState extends loginState {
         }
         terminate(exitcode);
     }
-} 
+}
