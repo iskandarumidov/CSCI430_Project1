@@ -102,6 +102,12 @@ public class Warehouse implements Serializable {
     client.printTransactions();
   }
 
+	  public void getClientWaitlist() {
+	  Product product = productList.getName();
+	  product.printWaitlist();
+  }
+
+	
   public void getOutstandingBalances() {
     Iterator clientIterator = clientList.getClients();
 		//Tests client's remaining balance
