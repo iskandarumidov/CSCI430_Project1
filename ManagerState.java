@@ -272,17 +272,8 @@ public class ManagerState extends WarehouseState {
         } while(true);
     }
 
-    public boolean salesClerkMenu(){
-        String clerkID = getToken("Please input the Sales-Clerk Id: ");
-        if(Warehouse.instance().searchClerk(clerkID) != null){
-            (WarehouseContext.instance()).setClerk(clerkID);
+    public void salesClerkMenu(){
             (WarehouseContext.instance()).changeState(2);
-        }
-        else{
-            System.out.println("Invalid Clerk Id.");
-            return false;
-        }
-
     }
 
     public void process(){
@@ -303,13 +294,10 @@ public class ManagerState extends WarehouseState {
                                             break;
                 case UPDATE_PRODUCT:        updateProduct();
                                             break;
-                case SALESCLERK_MENU:       if(salesClerkMenu()){
-                                                exitcode = 1;
-                                                done = true;
-                                            }
-                    break;
+                case SALESCLERK_MENU:       salesClerkMenu();
+                                            break;
                 case HELP:                  help();
-                    break;
+                                            break;
                 case EXIT:                  exitcode = 0;
                                             done = true;
                     break;
