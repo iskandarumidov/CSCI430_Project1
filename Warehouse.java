@@ -101,6 +101,12 @@ public class Warehouse implements Serializable {
     Client client = clientList.searchClient(clientID);
     client.printTransactions();
   }
+	
+	  public void getClientWaitlist(String clientID) {
+	  Client client = clientList.searchClient(clientID);
+	  client.printClientOrder();	
+	  }
+ 
 
   public void getOutstandingBalances() {
     Iterator clientIterator = clientList.getClients();
