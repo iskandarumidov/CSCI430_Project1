@@ -97,7 +97,8 @@ public class ClerkMenuState extends WarehouseState {
 
   public void help() {
     System.out.println("Enter a number between 0 and 8 as explained below:");
-    System.out.println(EXIT + " to log out\n");
+    System.out.println("\nCLERK MENU:");
+    System.out.println(EXIT + " to log out");
     System.out.println(ADD_CLIENT + " to add a new client");
     System.out.println(GET_OUTSTANDING_BALANCES  + " to print all clients with outstanding balances");
     System.out.println(ACCEPT_SHIPMENT  + " to accept a shipment from a supplier");
