@@ -1,5 +1,6 @@
 import java.util.*;
 import java.text.*;
+import java.time.Year;
 import java.io.*;
 public class WarehouseContext {
   
@@ -44,10 +45,10 @@ public class WarehouseContext {
     try {
       Warehouse tempWarehouse = Warehouse.retrieve();
       if (tempWarehouse != null) {
-        System.out.println(" The library has been successfully retrieved from the file LibraryData \n" );
+        System.out.println(" The warehouse has been successfully retrieved from the file WarehouseData \n" );
         warehouse = tempWarehouse;
       } else {
-        System.out.println("File doesnt exist; creating new library" );
+        System.out.println("File doesnt exist; creating new warehouse" );
         warehouse = Warehouse.instance();
       }
     } catch(Exception cnfe) {
@@ -55,7 +56,6 @@ public class WarehouseContext {
     }
   }
 
-  // !!! FIGURE OUT IF THESE SHOULD BE USER OR CLIENT !!!
   public void setLogin(int code)
   {currentClient = code;}
 
@@ -69,13 +69,13 @@ public class WarehouseContext {
   { return clientID;}
 
   private WarehouseContext() { //constructor
-    System.out.println("In Libcontext constructor");
-    if (yesOrNo("Look for saved data and  use it?")) {
+    System.out.println("In WarehouseContext constructor");
+    if (yesOrNo("Look for saved data and use it?")) {
       retrieve();
     } else {
       warehouse = Warehouse.instance();
     }
-    // !!! ERROR D/T MANAGER STATE NOT EXTENDED/NAMED PROPERLY !!!
+
     // set up the FSM and transition table;
     states = new WarehouseState[4];
     states[0] = ClientState.instance();
@@ -129,6 +129,4 @@ public class WarehouseContext {
   public static void main (String[] args){
     WarehouseContext.instance().process(); 
   }
-
-
 }
