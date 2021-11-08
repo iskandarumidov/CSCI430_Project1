@@ -178,7 +178,8 @@ public void getClientData() {
   }
   
  public void getClientsWaitlist() {
-	 warehouse.getClientWaitlist();
+	 String clientID = getToken("Enter client id");
+	 warehouse.getClientWaitlist(clientID);
   }
 
   public Iterator<Product> getProducts() {
