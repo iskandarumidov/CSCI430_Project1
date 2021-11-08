@@ -11,7 +11,7 @@ public class Client implements Serializable{
   private static final String CLIENT_STRING = "C";
   private ShoppingCart cart;
   private List<Transaction> transactions = new LinkedList<Transaction>();
-  private List<ShoppingCart> clientOrders = new LinkedList<>();
+  private List<Quantity> clientOrders = new LinkedList<>();
     
   public  Client (String name, String address, String phone) {
     this.name = name;
@@ -42,7 +42,7 @@ public class Client implements Serializable{
 	return cart;
   }
   
-   public Iterator<ShoppingCart> getClientOrder() {
+   public Iterator<Quantity> getClientOrder() {
     return clientOrders.iterator();
   }
 
