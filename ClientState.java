@@ -174,7 +174,8 @@ public class ClientState extends WarehouseState{
   }
 
 public void getClientData() {
-	warehouse.getClients();
+  String clientID = getToken("Enter client id");
+	System.out.println(warehouse.searchClients(clientID));
   }
   
  public void getClientsWaitlist() {
