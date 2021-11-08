@@ -104,13 +104,7 @@ public class Warehouse implements Serializable {
   
   public void getClientWaitlist(String clientID) {
 	  Client client = clientList.searchClient(clientID);
-	  Iterator clientOrderIterator = client.getClientOrder();
-        while (clientOrderIterator.hasNext())
-		{
-			 System.out.println("Waitlist Item: ");
-			 client.printClientOrder();
-			 System.out.println();
-		}
+	  client.printClientOrder();	
 	  }
  
 
