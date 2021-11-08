@@ -11,6 +11,7 @@ public class Client implements Serializable{
   private static final String CLIENT_STRING = "C";
   private ShoppingCart cart;
   private List<Transaction> transactions = new LinkedList<Transaction>();
+  private List<ShoppingCart> clientOrders = new LinkedList<>();
     
   public  Client (String name, String address, String phone) {
     this.name = name;
@@ -40,6 +41,11 @@ public class Client implements Serializable{
   public ShoppingCart getCart(){
 	return cart;
   }
+  
+   public Iterator<ShoppingCart> getClientOrder() {
+    return clientOrders.iterator();
+  }
+
 
   public void setName(String newName) {
     name = newName;
@@ -59,6 +65,21 @@ public class Client implements Serializable{
 	  cart = assignedCart;
   }
     
+  public boolean addClientOrder(ShoppingCart clientOrder){
+    return clientOrders.add(clientOrder);
+  }
+  
+    public void printClientOrder(){
+	  System.out.println("Items Waitlisted: ");
+	  Iterator<ShoppingCart> clientOrders = getClientOrder();
+		while(clientOrders.hasNext()){
+			ShoppingCart currentClientOrder = (ShoppingCart)clientOrders.next();
+			System.out.println(currentClientOrder.toString());
+			System.out.println();
+		}
+		System.out.println();	  
+  }
+  
   public boolean hasOutstandingBalance() {
   return (balance > 0);
   }

@@ -101,6 +101,12 @@ public class Warehouse implements Serializable {
     Client client = clientList.searchClient(clientID);
     client.printTransactions();
   }
+  
+  public void getClientWaitlist(String clientID) {
+	  Client client = clientList.searchClient(clientID);
+	  client.printClientOrder();	
+	  }
+ 
 
   public void getOutstandingBalances() {
     Iterator clientIterator = clientList.getClients();
@@ -115,10 +121,6 @@ public class Warehouse implements Serializable {
 			 if(finalBalance > 0)
 				 System.out.println(finalName + ", Outstanding Balance: " + finalBalance); 
 		}
-  }
-  
-  public void getWaitlist(Product currentProduct) {
-    currentProduct.printWaitlist();
   }
 
   public boolean assignProductSupplier(String supplierID, String productID, double supplyPrice){
@@ -151,17 +153,9 @@ public class Warehouse implements Serializable {
   public Iterator getClients() {
       return clientList.getClients();
   }
-  
-  public Client searchClients(String clientId) {
-    return clientList.searchClient(clientId);
-  }
 
   public Iterator<Product> getProducts() {
       return productList.getProducts();
-  }
-  
-  public Product searchProducts(String productId) {
-    return productList.searchProduct(productId);
   }
 
   public Iterator<Supplier> getSuppliers() {
