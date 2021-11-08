@@ -8,6 +8,7 @@ public class WarehouseContext {
   private static WarehouseContext context;
   private int currentClient;
   private String clientID;
+  private String clerkID;
   private BufferedReader reader = new BufferedReader(new 
                                       InputStreamReader(System.in));
 
@@ -61,12 +62,18 @@ public class WarehouseContext {
 
   public void setClient(String cID)
   { clientID = cID;}
+  
+  public void setClerk(String ckID)
+  { clerkID = ckID;}
 
   public int getLogin()
   { return currentClient;}
 
   public String getClient()
   { return clientID;}
+  
+  public String getClerk()
+  { return clerkID;}
 
   private WarehouseContext() { //constructor
     System.out.println("In Libcontext constructor");
