@@ -97,15 +97,15 @@ public class ManagerState extends WarehouseState {
 
     public void help(){
         System.out.println("Enter a number between 0 and 8 as explained below:");
-        System.out.println(EXIT + " 0: to Exit\n");
-        System.out.println(ADD_PRODUCT + " 1: to add a product\n");
-        System.out.println(ADD_SUPPLIER + " 2: to add a supplier\n");
-        System.out.println(SUPPLIER_LIST + " 3: to show supplier List");
-        System.out.println(PRODUCT_SUPPLIER_LIST + " 4: to show Product's List of Suppliers w/purchase prices\n");
-        System.out.println(SUPPLIER_PRODUCT_LIST + " 5: to show Supplier's List of Products w/purchase prices\n");
-        System.out.println(UPDATE_PRODUCT + " 6: to Update prducts and purchase prices for a supplier\n");
-        System.out.println(SALESCLERK_MENU + " 7: to switch to the Sales-Clerk menu\n");
-        System.out.println(HELP + " 8: for help");
+        System.out.println(EXIT + " to Exit\n");
+        System.out.println(ADD_PRODUCT + " to add a product\n");
+        System.out.println(ADD_SUPPLIER + " to add a supplier\n");
+        System.out.println(SUPPLIER_LIST + " to show supplier List");
+        System.out.println(PRODUCT_SUPPLIER_LIST + " to show Product's List of Suppliers w/purchase prices\n");
+        System.out.println(SUPPLIER_PRODUCT_LIST + " to show Supplier's List of Products w/purchase prices\n");
+        System.out.println(UPDATE_PRODUCT + " to Update prducts and purchase prices for a supplier\n");
+        System.out.println(SALESCLERK_MENU + " to switch to the Sales-Clerk menu\n");
+        System.out.println(HELP + " for help");
     }
 
     public void addProduct(){
@@ -251,11 +251,11 @@ public class ManagerState extends WarehouseState {
             Supplier supplier = supplierList.searchSupplier(supplierID);
             supplier.getSuppliedProducts();
 
-            System.out.println("\nEnter a number 0, 1, 9, or 10 as explained below.\n");
-            System.out.println(EXIT + " 0: to Exit\n");
-            System.out.println(ADD_PRODUCT + " 1: to add a product to product-supplier\n");
-            System.out.println(REMOVE_PRODUCT + " 9: to remove a product from product-supplier\n");
-            System.out.println(UPDATE_PRICE + " 10: to update purchase price\n");
+            System.out.println("\nEnter a number 0, 9, 10, or 11 as explained below.\n");
+            System.out.println(EXIT + " to Exit\n");
+            System.out.println(ADD_SUPPLIER_PRODUCT + " to add a product to product-supplier\n");
+            System.out.println(REMOVE_PRODUCT + " to remove a product from product-supplier\n");
+            System.out.println(UPDATE_PRICE + " to update purchase price\n");
             
             int command;
             while((command = getCommand()) != EXIT){
