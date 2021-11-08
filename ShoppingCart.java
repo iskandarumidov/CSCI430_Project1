@@ -119,10 +119,8 @@ public class ShoppingCart implements Serializable {
 				currentProduct.setAmountInStock(amtAvailable - amtRequested);
 			}
 			else {
-				// add to waitlist and client order
-				this.client = client;
+				// add to waitlist
 				currentItem.getProduct().addWaitlistedOrder(currentItem);
-				currentItem.getProduct().addClientOrder(currentItem);
 				System.out.println(currentItem.getProduct().getName() + " added to waitlist");
 			}
 			iterator.remove();
