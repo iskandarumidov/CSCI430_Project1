@@ -17,9 +17,7 @@ public class ClientState extends WarehouseState{
   private static final int ACCEPT_PAYMENT = 9;
   private static final int SAVE = 10;
   private static final int RETRIEVE = 11;
-  private static final int GET_CLIENT = 12;
-  private static final int GET_WAITLIST = 13;
-  private static final int HELP = 14;
+  private static final int HELP = 12;
   private ClientState() {
     if (yesOrNo("Look for saved data and use it?")) {
       retrieve();
@@ -106,8 +104,6 @@ public class ClientState extends WarehouseState{
     System.out.println(ACCEPT_PAYMENT  + " to apply a payment to a client's account");
     System.out.println(SAVE + " to save data");
     System.out.println(RETRIEVE + " to retrieve");
-	System.out.println(GET_CLIENT + " to retrieve Client data");
-	System.out.println(GET_WAITLIST + " to retrieve waitlist");
     System.out.println(HELP + " for help");
   }
 
@@ -173,17 +169,8 @@ public class ClientState extends WarehouseState{
     warehouse.getOutstandingBalances();  
   }
 
-public void getClientData() {
-	warehouse.getClients();
-  }
-  
- public void getClientsWaitlist() {
-	 String clientID = getToken("Enter client id");
-	 warehouse.getClientWaitlist(clientID);
-  }
-
   public Iterator<Product> getProducts() {
-      return warehouse.getProducts();
+      return productList.getProducts();
   }
 
   public void acceptPayment() {
@@ -248,11 +235,7 @@ public void getClientData() {
         case SAVE: save();
 		break;
         case RETRIEVE: retrieve();
-		break;	
-		case GET_CLIENT: getClientData();
-		break;
-		case GET_WAITLIST: getClientsWaitlist();
-		break;
+		break;		
         case HELP: help();
 		break;
       }
