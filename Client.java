@@ -65,7 +65,7 @@ public class Client implements Serializable{
 	  cart = assignedCart;
   }
     
-  public boolean addClientOrder(ShoppingCart clientOrder){
+  public boolean addClientOrder(Quantity clientOrder){
     return clientOrders.add(clientOrder);
   }
   
