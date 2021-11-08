@@ -27,7 +27,7 @@ public class Loginstate extends WarehouseState{
     do {
       try {
         int value = Integer.parseInt(getToken("Enter command:" ));
-        if (value <= EXIT && value >= CLIENT_LOGIN) {
+        if (value <= EXIT && value >= CLIENT) {
           return value;
         }
       } catch (NumberFormatException nfe) {
@@ -75,8 +75,8 @@ public class Loginstate extends WarehouseState{
     (WarehouseContext.instance()).changeState(1);
   }
   private void clerk(){
-    (LibContext.instance()).setLogin(LibContext.IsClerk);
-    (LibContext.instance()).changeState(2);
+    (WarehouseContext.instance()).setLogin(WarehouseContext.IsClerk);
+    (WarehouseContext.instance()).changeState(2);
   }
 
   public void process() {
