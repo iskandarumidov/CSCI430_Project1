@@ -71,9 +71,9 @@ public class Client implements Serializable{
   
     public void printClientOrder(){
 	  System.out.println("Items Waitlisted: ");
-	  Iterator<ShoppingCart> clientOrders = getClientOrder();
+	  Iterator<Quantity> clientOrders = getClientOrder();
 		while(clientOrders.hasNext()){
-			ShoppingCart currentClientOrder = (ShoppingCart)clientOrders.next();
+			Quantity currentClientOrder = (Quantity)clientOrders.next();
 			System.out.println(currentClientOrder.toString());
 			System.out.println();
 		}
