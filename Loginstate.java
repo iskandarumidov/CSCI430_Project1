@@ -60,7 +60,7 @@ public class Loginstate extends WarehouseState{
   }
 
   private void client(){
-    String clientID = getToken("Please input the manager id: ");
+    String clientID = getToken("Please input the client id: ");
     if (Warehouse.instance().searchClients(clientID) != null){
       (WarehouseContext.instance()).setLogin(WarehouseContext.IsClient);
       (WarehouseContext.instance()).setClient(clientID);      

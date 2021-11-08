@@ -77,12 +77,12 @@ public class WarehouseContext {
     }
     // !!! ERROR D/T MANAGER STATE NOT EXTENDED/NAMED PROPERLY !!!
     // set up the FSM and transition table;
-    states = new WarehouseState[3];
+    states = new WarehouseState[4];
     states[0] = ClientState.instance();
     states[1] = ManagerState.instance();
     states[2]=  ClerkMenuState.instance(); 
     states[3]=  Loginstate.instance();
-    nextState = new int[3][3];
+    nextState = new int[4][4];
     nextState[0][0] = 3;nextState[0][1] = 3;nextState[0][2] = 3;nextState[0][3] = -2;
     nextState[1][0] = 3;nextState[1][1] = 3;nextState[1][2] = 2;nextState[1][3] = -2;
     nextState[2][0] = 0;nextState[2][1] = 3;nextState[2][2] = 3;nextState[2][3] = -2;
